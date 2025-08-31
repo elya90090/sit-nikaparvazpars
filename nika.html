@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Persian Footer Simple</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tahoma', Arial, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header دقیقاً مطابق عکس اول */
+        .header {
+            background: #999999;
+            padding: 12px 0;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: #d32f2f;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            gap: 35px;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #d32f2f;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .icon-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .icon-button:hover {
+            color: #d32f2f;
+        }
+
+        /* Main content */
+        .main-content {
+            flex: 1;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><defs><linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="%235fb3d4"/><stop offset="70%" stop-color="%234a9ac7"/><stop offset="100%" stop-color="%233d8bb5"/></linearGradient><linearGradient id="city" x1="0%" y1="100%" x2="0%" y2="0%"><stop offset="0%" stop-color="%23d4a574"/><stop offset="30%" stop-color="%23c9986b"/><stop offset="100%" stop-color="%23be8c62"/></linearGradient></defs><rect width="100%" height="70%" fill="url(%23sky)"/><rect y="70%" width="100%" height="30%" fill="url(%23city)"/><ellipse cx="400" cy="200" rx="100" ry="80" fill="%234a9ac7"/><path d="M300 200 Q400 120 500 200 Q400 160 300 200" fill="%235fb3d4"/><circle cx="400" cy="180" r="15" fill="%23ffffff" opacity="0.8"/><rect x="350" y="280" width="100" height="120" fill="%23c9986b"/><rect x="480" y="300" width="80" height="100" fill="%23be8c62"/><rect x="580" y="270" width="90" height="130" fill="%23d4a574"/></svg>') center/cover;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .main-title {
+            font-size: 2.5rem;
+            font-weight: normal;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .typing-text {
+            border-right: 3px solid #4fc3f7;
+            padding-right: 10px;
+            animation: blink-cursor 1s infinite;
+        }
+
+        @keyframes blink-cursor {
+            0%, 50% { border-right-color: #4fc3f7; }
+            51%, 100% { border-right-color: transparent; }
+        }
+
+        .visitor-counter {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 400px;
+            margin: 0 auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .counter-label {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .counter-display {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #4fc3f7;
+            margin: 15px 0;
+            text-shadow: 0 0 15px rgba(79,195,247,0.5);
+        }
+
+        .counter-text {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* Footer ساده مطابق عکس اول */
+        .footer {
+            background: #e8e8e8;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h4 {
+            color: #333;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #d32f2f;
+        }
+
+        .contact-details {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        .contact-details p {
+            margin-bottom: 8px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            background: #999;
+            color: white;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .social-icon:hover {
+            background: #d32f2f;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #ddd;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .copyright {
+            margin-bottom: 8px;
+        }
+
+        .developer {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .navigation {
+                gap: 25px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .counter-display {
+                font-size: 2.5rem;
+            }
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(79,195,247,0.3);
+            border-radius: 50%;
+            border-top-color: #4fc3f7;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header مطابق عکس اول -->
+    <header class="header">
+        <div class="header-container">
+            <div class="header-icons">
+                <button class="icon-button">🔍</button>
+                <button class="icon-button">🛒</button>
+            </div>
+            
+            <nav class="navigation">
+                <a href="#" class="nav-link active">خانه</a>
+                <a href="#" class="nav-link">رزرو</a>
+                <a href="#" class="nav-link">گالری</a>
+                <a href="#" class="nav-link">اطلاعات سفر</a>
+                <a href="#" class="nav-link">راهنمای سفر</a>
+                <a href="#" class="nav-link">وبلاگ</a>
+                <a href="#" class="nav-link">تماس با ما</a>
+                <a href="#" class="nav-link">درباره ما</a>
+                <a href="#" class="nav-link">سایر</a>
+            </nav>
+            
+            <div class="logo">
+                <div class="logo-icon">ای</div>
+                <div class="logo-text">ایلیاگشت</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- محتوای اصلی با تصویر گنبد -->
+    <main class="main-content">
+        <h1 class="main-title">
+            <span class="typing-text" id="typingText"></span>
+        </h1>
+        
+        <div class="visitor-counter">
+            <div class="counter-label">تعداد بازدیدکنندگان امروز</div>
+            <div class="counter-display" id="visitorCounter">
+                <span class="loading-spinner"></span>
+            </div>
+            <div class="counter-text">نفر از سایت بازدید کرده‌اند</div>
+        </div>
+    </main>
+
+    <!-- Footer ساده -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>خدمات</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">تور داخلی</a></li>
+                        <li><a href="#">تور خارجی</a></li>
+                        <li><a href="#">رزرو هتل</a></li>
+                        <li><a href="#">بلیط هواپیما</a></li>
+                        <li><a href="#">ویزا</a></li>
+                        <li><a href="#">بیمه مسافرتی</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>مقصدها</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">اصفهان</a></li>
+                        <li><a href="#">شیراز</a></li>
+                        <li><a href="#">یزد</a></li>
+                        <li><a href="#">کیش</a></li>
+                        <li><a href="#">قشم</a></li>
+                        <li><a href="#">مشهد</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>پشتیبانی</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">تماس با ما</a></li>
+                        <li><a href="#">سوالات متداول</a></li>
+                        <li><a href="#">راهنما</a></li>
+                        <li><a href="#">قوانین</a></li>
+                        <li><a href="#">حریم خصوصی</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>تماس با ما</h4>
+                    <div class="contact-details">
+                        <p>تلفن: ۰۲۱-۸۸۷۷۶۶۵۵</p>
+                        <p>موبایل: ۰۹۱۲-۳۴۵۶۷۸۹</p>
+                        <p>ایمیل: info@irantravel.com</p>
+                        <p>آدرس: تهران، ولیعصر</p>
+                    </div>
+                    
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">📱</a>
+                        <a href="#" class="social-icon">📷</a>
+                        <a href="#" class="social-icon">💬</a>
+                        <a href="#" class="social-icon">✈️</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="copyright">© ۱۴۰۳ کلیه حقوق محفوظ است</div>
+                <div class="developer">طراحی و توسعه raz3400@</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        class AutoTypingText {
+            constructor() {
+                this.element = document.getElementById('typingText');
+                this.text = 'آرامش خیال را با تور های شرکت ما سپری کنید';
+                this.index = 0;
+                this.isDeleting = false;
+                
+                this.startTyping();
+            }
+
+            startTyping() {
+                const typeSpeed = this.isDeleting ? 50 : 100;
+                
+                if (!this.isDeleting && this.index < this.text.length) {
+                    // تایپ کردن
+                    this.element.textContent = this.text.substring(0, this.index + 1);
+                    this.index++;
+                    setTimeout(() => this.startTyping(), typeSpeed);
+                } else if (this.isDeleting && this.index > 0) {
+                    // پاک کردن
+                    this.element.textContent = this.text.substring(0, this.index - 1);
+                    this.index--;
+                    setTimeout(() => this.startTyping(), typeSpeed);
+                } else if (!this.isDeleting && this.index === this.text.length) {
+                    // توقف 3 ثانیه و شروع پاک کردن
+                    setTimeout(() => {
+                        this.isDeleting = true;
+                        this.startTyping();
+                    }, 3000);
+                } else if (this.isDeleting && this.index === 0) {
+                    // توقف 1 ثانیه و شروع دوباره تایپ
+                    setTimeout(() => {
+                        this.isDeleting = false;
+                        this.startTyping();
+                    }, 1000);
+                }
+            }
+        }
+
+        class SimpleCounter {
+            constructor() {
+                this.element = document.getElementById('visitorCounter');
+                this.count = 0;
+                this.target = 1247;
+                this.isRunning = false;
+                
+                this.start();
+            }
+
+            start() {
+                if (this.isRunning) return;
+                
+                this.isRunning = true;
+                this.count = 0;
+                
+                // شروع پس از 2 ثانیه
+                setTimeout(() => {
+                    this.countUp();
+                }, 2000);
+            }
+
+            countUp() {
+                const interval = setInterval(() => {
+                    this.count += Math.floor(Math.random() * 12) + 1;
+                    
+                    if (this.count >= this.target) {
+                        this.count = this.target;
+                        this.updateDisplay();
+                        clearInterval(interval);
+                        this.isRunning = false;
+                        this.scheduleReset();
+                        return;
+                    }
+                    
+                    this.updateDisplay();
+                }, 150);
+            }
+
+            updateDisplay() {
+                const persianNum = this.toPersian(this.count.toLocaleString());
+                this.element.textContent = persianNum;
+            }
+
+            toPersian(str) {
+                const persian = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+                return str.replace(/[0-9]/g, digit => persian[parseInt(digit)]);
+            }
+
+            scheduleReset() {
+                // پاک کردن بعد از 3 دقیقه
+                setTimeout(() => {
+                    this.reset();
+                }, 180000);
+            }
+
+            reset() {
+                this.element.style.opacity = '0.5';
+                
+                setTimeout(() => {
+                    this.element.innerHTML = '<span class="loading-spinner"></span>';
+                    this.element.style.opacity = '1';
+                    
+                    // شروع دوباره بعد از 3 ثانیه
+                    setTimeout(() => {
+                        this.start();
+                    }, 3000);
+                }, 1000);
+            }
+        }
+
+        // شروع تایپ خودکار و شمارنده
+        document.addEventListener('DOMContentLoaded', () => {
+            new AutoTypingText();
+            new SimpleCounter();
+        });
+    </script>
+</body>
+</html>
