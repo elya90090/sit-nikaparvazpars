@@ -519,17 +519,39 @@
         <div class="success-message" id="successMessage">لوگو با موفقیت ذخیره شد!</div>
         <div class="error-message" id="errorMessage">خطا در بارگذاری لوگو!</div>
         
-        <label for="logoFile">📁 انتخاب فایل تصویر:</label>
-        <input type="file" id="logoFile" accept="image/*" onchange="previewImage(this)">
+        <!-- بخش ورود ادمین -->
+        <div id="loginSection">
+            <label for="adminUser">👤 نام کاربری:</label>
+            <input type="text" id="adminUser" placeholder="admin" class="logo-url-input">
+            
+            <label for="adminPass">🔐 رمز عبور:</label>
+            <input type="password" id="adminPass" placeholder="رمز عبور" class="logo-url-input">
+            
+            <button onclick="adminLogin()" class="apply-logo-btn">🔓 ورود</button>
+        </div>
         
-        <label for="logoUrl">🔗 یا لینک تصویر:</label>
-        <input type="text" id="logoUrl" placeholder="https://example.com/logo.jpg" class="logo-url-input">
-        
-        <img id="logoPreview" class="logo-preview" alt="پیش‌نمایش لوگو">
-        
-        <div>
-            <button onclick="applyLogo()" class="apply-logo-btn">✅ اعمال لوگو</button>
-            <button onclick="removeLogo()" class="remove-logo-btn">🗑️ حذف لوگو</button>
+        <!-- بخش مدیریت لوگو - پنهان تا ورود -->
+        <div id="logoManagement" style="display:none;">
+            <div style="background:#e8f5e8; padding:10px; border-radius:5px; margin:10px 0; font-size:11px;">
+                ✅ ورود موفق! خوش آمدید مدیر عزیز
+            </div>
+            
+            <label for="logoFile">📁 انتخاب فایل تصویر:</label>
+            <input type="file" id="logoFile" accept="image/*" onchange="previewImage(this)">
+            
+            <label for="logoUrl">🔗 یا لینک تصویر:</label>
+            <input type="text" id="logoUrl" placeholder="https://example.com/logo.jpg" class="logo-url-input">
+            
+            <img id="logoPreview" class="logo-preview" alt="پیش‌نمایش لوگو">
+            
+            <div>
+                <button onclick="applyLogo()" class="apply-logo-btn">✅ اعمال لوگو</button>
+                <button onclick="removeLogo()" class="remove-logo-btn">🗑️ حذف لوگو</button>
+            </div>
+            
+            <div style="margin-top:10px; padding-top:10px; border-top:1px solid #ddd;">
+                <button onclick="adminLogout()" style="background:#ff9800; color:white; border:none; padding:8px 12px; border-radius:4px; cursor:pointer; font-size:11px; margin-right:5px;">🚪 خروج</button>
+            </div>
         </div>
         
         <button onclick="closeAdminPanel()" class="close-admin-btn">❌ بستن پنل</button>
@@ -902,12 +924,48 @@
 
         // مدیریت پنل ادمین
         function toggleAdminPanel() {
-            const password = prompt('کلمه عبور ادمین را وارد کنید:');
-            if (password === 'admin123') {
-                const panel = document.getElementById('logoUploadPanel');
-                panel.classList.add('show');
-            } else if (password !== null) {
-                alert('کلمه عبور اشتباه است!');
+            const panel = document.getElementById('logoUploadPanel');
+            panel.classList.add('show');
+            
+            // نمایش بخش ورود
+            document.getElementById('loginSection').style.display = 'block';
+            document.getElementById('logoManagement').style.display = 'none';
+        }
+        
+        // ورود ادمین
+        function adminLogin() {
+            const username = document.getElementById('adminUser').value.trim();
+            const password = document.getElementById('adminPass').value.trim();
+            
+            // بررسی اعتبار (می‌توانید تغییر دهید)
+            if (username === 'admin' && password === 'admin123') {
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('logoManagement').style.display = 'block';
+                
+                // پاک کردن فیلدهای ورود
+                document.getElementById('adminUser').value = '';
+                document.getElementById('adminPass').value = '';
+                
+                logoManager.showMessage('success', 'ورود موفق! خوش آمدید مدیر عزیز');
+            } else {
+                logoManager.showMessage('error', 'نام کاربری یا رمز عبور اشتباه است!');
+            }
+        }
+        
+        // خروج ادمین
+        function adminLogout() {
+            if (confirm('آیا مطمئن هستید که می‌خواهید خروج کنید؟')) {
+                document.getElementById('loginSection').style.display = 'block';
+                document.getElementById('logoManagement').style.display = 'none';
+                
+                // پاک کردن فیلدها
+                document.getElementById('adminUser').value = '';
+                document.getElementById('adminPass').value = '';
+                document.getElementById('logoFile').value = '';
+                document.getElementById('logoUrl').value = '';
+                document.getElementById('logoPreview').style.display = 'none';
+                
+                logoManager.showMessage('success', 'خروج موفق!');
             }
         }
         
@@ -915,7 +973,13 @@
             const panel = document.getElementById('logoUploadPanel');
             panel.classList.remove('show');
             
-            // پاک کردن فیلدها
+            // بازنشانی به حالت اولیه
+            document.getElementById('loginSection').style.display = 'block';
+            document.getElementById('logoManagement').style.display = 'none';
+            
+            // پاک کردن همه فیلدها
+            document.getElementById('adminUser').value = '';
+            document.getElementById('adminPass').value = '';
             const fileInput = document.getElementById('logoFile');
             const urlInput = document.getElementById('logoUrl');
             const preview = document.getElementById('logoPreview');
@@ -934,11 +998,15 @@
                 const panel = document.getElementById('logoUploadPanel');
                 panel.classList.add('show');
                 
+                // ورود مستقیم بدون نیاز به رمز
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('logoManagement').style.display = 'block';
+                
                 // حذف پارامتر از URL برای امنیت
                 window.history.replaceState({}, document.title, window.location.pathname);
                 
                 setTimeout(() => {
-                    alert('خوش آمدید! شما وارد پنل مدیریت شدید.');
+                    logoManager.showMessage('success', 'خوش آمدید! شما وارد پنل مدیریت شدید.');
                 }, 500);
             }
         }
@@ -1029,7 +1097,24 @@
             // بررسی دسترسی ادمین
             checkAdminAccess();
             
-            // اضافه کردن event listener برای تغییر فیلد URL
+            // اضافه کردن event listener برای فیلدهای ورود
+            const adminUser = document.getElementById('adminUser');
+            const adminPass = document.getElementById('adminPass');
+            
+            if (adminUser && adminPass) {
+                // امکان ورود با فشردن Enter
+                adminPass.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        adminLogin();
+                    }
+                });
+                
+                adminUser.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        document.getElementById('adminPass').focus();
+                    }
+                });
+            }
             const urlInput = document.getElementById('logoUrl');
             if (urlInput) {
                 urlInput.addEventListener('input', function() {
