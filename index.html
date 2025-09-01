@@ -40,6 +40,20 @@
             gap: 8px;
         }
 
+        .logo-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            object-fit: cover;
+            background: #d32f2f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
         .logo-icon {
             width: 32px;
             height: 32px;
@@ -103,6 +117,46 @@
             text-align: center;
             padding: 100px 20px;
             position: relative;
+        }
+
+        /* لوگو در وسط صفحه */
+        .main-logo-container {
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        .main-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .main-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 13px;
+        }
+
+        .main-logo-placeholder {
+            font-size: 48px;
+            color: #4fc3f7;
+            text-shadow: 0 0 20px rgba(79,195,247,0.5);
         }
 
         .main-title {
@@ -242,6 +296,43 @@
             text-align: center;
             font-size: 12px;
             color: #999;
+            position: relative;
+        }
+
+        /* لینک مخفی ادمین در فوتر */
+        .admin-link {
+            position: absolute;
+            bottom: 5px;
+            right: 20px;
+            width: 15px;
+            height: 15px;
+            background: rgba(211, 47, 47, 0.1);
+            border-radius: 50%;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: transparent;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .admin-link:hover {
+            background: rgba(211, 47, 47, 0.3);
+            border-color: rgba(211, 47, 47, 0.5);
+            color: #d32f2f;
+            transform: scale(1.2);
+            box-shadow: 0 2px 8px rgba(211, 47, 47, 0.3);
+        }
+
+        /* برای موبایل قابل رویت‌تر باشد */
+        @media (max-width: 768px) {
+            .admin-link {
+                background: rgba(211, 47, 47, 0.2);
+                width: 20px;
+                height: 20px;
+            }
         }
 
         .copyright {
@@ -251,6 +342,68 @@
         .developer {
             color: #d32f2f;
             font-weight: bold;
+        }
+
+        /* Logo Upload Section - فقط برای ادمین */
+        .logo-upload-section {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.9);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+            font-size: 12px;
+            color: #333;
+            display: none; /* پنهان به صورت پیش‌فرض */
+        }
+
+        .logo-upload-section.show {
+            display: block;
+        }
+
+        /* دکمه پنهان برای ورود ادمین */
+        .admin-access {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            width: 20px;
+            height: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 999;
+            opacity: 0;
+        }
+
+        .admin-access:hover {
+            opacity: 0.1;
+        }
+
+        .logo-upload-section input[type="file"] {
+            margin-bottom: 10px;
+            font-size: 11px;
+        }
+
+        .logo-url-input {
+            width: 200px;
+            padding: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+
+        .apply-logo-btn {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
         }
 
         /* Responsive */
@@ -273,6 +426,18 @@
             .counter-display {
                 font-size: 2.5rem;
             }
+
+            .main-logo {
+                width: 100px;
+                height: 100px;
+            }
+
+            .logo-upload-section {
+                position: relative;
+                left: auto;
+                top: auto;
+                margin: 20px;
+            }
         }
 
         .loading-spinner {
@@ -291,11 +456,24 @@
     </style>
 </head>
 <body>
+    <!-- بخش آپلود لوگو - فقط برای ادمین -->
+    <button class="admin-access" onclick="toggleAdminPanel()" title="Admin Access"></button>
+    
+    <div class="logo-upload-section" id="logoUploadPanel">
+        <div>پنل مدیریت لوگو:</div>
+        <input type="file" id="logoFile" accept="image/*">
+        <input type="text" id="logoUrl" placeholder="یا لینک تصویر وارد کنید" class="logo-url-input">
+        <button onclick="applyLogo()" class="apply-logo-btn">اعمال</button>
+        <button onclick="closeAdminPanel()" style="background:#666;margin-left:5px;padding:5px 8px;border:none;color:white;border-radius:4px;font-size:11px;cursor:pointer;">بستن</button>
+    </div>
+
     <!-- Header مطابق عکس اول -->
     <header class="header">
         <div class="header-container">
             <div class="logo">
-                <div class="logo-icon">ن</div>
+                <div class="logo-image" id="headerLogo">
+                    <div class="logo-icon">ن</div>
+                </div>
                 <div class="logo-text">نیکا پرواز پارس</div>
             </div>
             
@@ -320,6 +498,13 @@
 
     <!-- محتوای اصلی با تصویر گنبد -->
     <main class="main-content">
+        <!-- لوگو اصلی در وسط -->
+        <div class="main-logo-container">
+            <div class="main-logo" id="mainLogo">
+                <div class="main-logo-placeholder">✈️</div>
+            </div>
+        </div>
+
         <h1 class="main-title">
             <span class="typing-text" id="typingText"></span>
         </h1>
@@ -393,6 +578,7 @@
             <div class="footer-bottom">
                 <div class="copyright">© ۱۴۰۳ کلیه حقوق محفوظ است | آژانس مسافرتی نیکا پرواز پارس</div>
                 <div class="developer">طراحی و توسعه raz3400@</div>
+                <a href="?admin=nika2024" class="admin-link" title="Admin Panel">🔧</a>
             </div>
         </div>
     </footer>
@@ -412,23 +598,19 @@
                 const typeSpeed = this.isDeleting ? 50 : 100;
                 
                 if (!this.isDeleting && this.index < this.text.length) {
-                    // تایپ کردن
                     this.element.textContent = this.text.substring(0, this.index + 1);
                     this.index++;
                     setTimeout(() => this.startTyping(), typeSpeed);
                 } else if (this.isDeleting && this.index > 0) {
-                    // پاک کردن
                     this.element.textContent = this.text.substring(0, this.index - 1);
                     this.index--;
                     setTimeout(() => this.startTyping(), typeSpeed);
                 } else if (!this.isDeleting && this.index === this.text.length) {
-                    // توقف 3 ثانیه و شروع پاک کردن
                     setTimeout(() => {
                         this.isDeleting = true;
                         this.startTyping();
                     }, 3000);
                 } else if (this.isDeleting && this.index === 0) {
-                    // توقف 1 ثانیه و شروع دوباره تایپ
                     setTimeout(() => {
                         this.isDeleting = false;
                         this.startTyping();
@@ -453,7 +635,6 @@
                 this.isRunning = true;
                 this.count = 0;
                 
-                // شروع پس از 2 ثانیه
                 setTimeout(() => {
                     this.countUp();
                 }, 2000);
@@ -487,7 +668,6 @@
             }
 
             scheduleReset() {
-                // پاک کردن بعد از 3 دقیقه
                 setTimeout(() => {
                     this.reset();
                 }, 180000);
@@ -500,7 +680,6 @@
                     this.element.innerHTML = '<span class="loading-spinner"></span>';
                     this.element.style.opacity = '1';
                     
-                    // شروع دوباره بعد از 3 ثانیه
                     setTimeout(() => {
                         this.start();
                     }, 3000);
@@ -508,14 +687,85 @@
             }
         }
 
-        // شروع تایپ خودکار و شمارنده
+        // مدیریت پنل ادمین
+        function toggleAdminPanel() {
+            const password = prompt('کلمه عبور ادمین را وارد کنید:');
+            if (password === 'admin123') { // می‌توانید کلمه عبور را تغییر دهید
+                const panel = document.getElementById('logoUploadPanel');
+                panel.classList.add('show');
+            } else if (password !== null) {
+                alert('کلمه عبور اشتباه است!');
+            }
+        }
+        
+        function closeAdminPanel() {
+            const panel = document.getElementById('logoUploadPanel');
+            panel.classList.remove('show');
+        }
+
+        // بررسی لینک ادمین در URL
+        function checkAdminAccess() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const adminKey = urlParams.get('admin');
+            
+            // اگر پارامتر admin در URL وجود داشته باشد
+            if (adminKey === 'nika2024') { // کلید مخصوص ادمین
+                const panel = document.getElementById('logoUploadPanel');
+                panel.classList.add('show');
+                
+                // حذف پارامتر از URL برای امنیت
+                window.history.replaceState({}, document.title, window.location.pathname);
+                
+                // نمایش پیام خوشامدگویی
+                setTimeout(() => {
+                    alert('خوش آمدید! شما وارد پنل مدیریت شدید.');
+                }, 500);
+            }
+        }
+
+        // تابع اعمال لوگو
+        function applyLogo() {
+            const fileInput = document.getElementById('logoFile');
+            const urlInput = document.getElementById('logoUrl');
+            const headerLogo = document.getElementById('headerLogo');
+            const mainLogo = document.getElementById('mainLogo');
+            
+            let imageUrl = '';
+            
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    updateLogos(e.target.result);
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+                return;
+            }
+            
+            if (urlInput.value.trim()) {
+                updateLogos(urlInput.value.trim());
+                return;
+            }
+            
+            alert('لطفاً یک فایل انتخاب کنید یا لینک تصویر وارد کنید');
+        }
+        
+        function updateLogos(imageUrl) {
+            const headerLogo = document.getElementById('headerLogo');
+            const mainLogo = document.getElementById('mainLogo');
+            
+            // به‌روزرسانی لوگو هدر
+            headerLogo.innerHTML = `<img src="${imageUrl}" alt="لوگو" style="width:100%;height:100%;object-fit:cover;border-radius:4px;">`;
+            
+            // به‌روزرسانی لوگو اصلی
+            mainLogo.innerHTML = `<img src="${imageUrl}" alt="لوگو">`;
+        }
+
+        // شروع اسکریپت‌ها
         document.addEventListener('DOMContentLoaded', () => {
             new AutoTypingText();
             new SimpleCounter();
+            checkAdminAccess(); // بررسی دسترسی ادمین از طریق لینک
         });
     </script>
 </body>
 </html>
-
-
-
