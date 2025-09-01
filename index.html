@@ -687,6 +687,14 @@
             }
         }
 
+        // بارگذاری لوگو از حافظه مرورگر هنگام شروع
+        function loadSavedLogo() {
+            const savedLogo = sessionStorage.getItem('nikaSiteLogo');
+            if (savedLogo) {
+                updateLogos(savedLogo);
+            }
+        }
+
         // مدیریت پنل ادمین
         function toggleAdminPanel() {
             const password = prompt('کلمه عبور ادمین را وارد کنید:');
