@@ -349,26 +349,19 @@
             position: fixed;
             top: 20px;
             left: 20px;
-            background: rgba(255,255,255,0.95);
-            padding: 20px;
+            background: rgba(255,255,255,0.9);
+            padding: 15px;
             border-radius: 10px;
             backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             z-index: 1000;
             font-size: 12px;
             color: #333;
-            display: none;
-            max-width: 300px;
+            display: none; /* پنهان به صورت پیش‌فرض */
         }
 
         .logo-upload-section.show {
             display: block;
-        }
-
-        .logo-upload-section h3 {
-            margin-bottom: 15px;
-            color: #d32f2f;
-            font-size: 14px;
         }
 
         /* دکمه پنهان برای ورود ادمین */
@@ -392,51 +385,25 @@
         .logo-upload-section input[type="file"] {
             margin-bottom: 10px;
             font-size: 11px;
-            width: 100%;
         }
 
         .logo-url-input {
-            width: 100%;
-            padding: 8px;
+            width: 200px;
+            padding: 5px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 11px;
         }
 
-        .apply-logo-btn, .remove-logo-btn {
+        .apply-logo-btn {
             background: #d32f2f;
             color: white;
             border: none;
-            padding: 8px 12px;
+            padding: 5px 10px;
             border-radius: 4px;
             cursor: pointer;
             font-size: 11px;
-            margin-right: 5px;
-            margin-bottom: 5px;
-        }
-
-        .remove-logo-btn {
-            background: #ff6b6b;
-        }
-
-        .close-admin-btn {
-            background: #666;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 11px;
-            margin-right: 5px;
-        }
-
-        .logo-preview {
-            max-width: 100%;
-            max-height: 80px;
-            margin: 10px 0;
-            border-radius: 4px;
-            display: none;
         }
 
         /* Responsive */
@@ -470,7 +437,6 @@
                 left: auto;
                 top: auto;
                 margin: 20px;
-                max-width: none;
             }
         }
 
@@ -487,26 +453,6 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-
-        .success-message {
-            background: #4caf50;
-            color: white;
-            padding: 10px;
-            border-radius: 4px;
-            margin: 10px 0;
-            font-size: 12px;
-            display: none;
-        }
-
-        .error-message {
-            background: #f44336;
-            color: white;
-            padding: 10px;
-            border-radius: 4px;
-            margin: 10px 0;
-            font-size: 12px;
-            display: none;
-        }
     </style>
 </head>
 <body>
@@ -514,47 +460,11 @@
     <button class="admin-access" onclick="toggleAdminPanel()" title="Admin Access"></button>
     
     <div class="logo-upload-section" id="logoUploadPanel">
-        <h3>🔧 پنل مدیریت لوگو</h3>
-        
-        <div class="success-message" id="successMessage">لوگو با موفقیت ذخیره شد!</div>
-        <div class="error-message" id="errorMessage">خطا در بارگذاری لوگو!</div>
-        
-        <!-- بخش ورود ادمین -->
-        <div id="loginSection">
-            <label for="adminUser">👤 نام کاربری:</label>
-            <input type="text" id="adminUser" placeholder="admin" class="logo-url-input">
-            
-            <label for="adminPass">🔐 رمز عبور:</label>
-            <input type="password" id="adminPass" placeholder="رمز عبور" class="logo-url-input">
-            
-            <button onclick="adminLogin()" class="apply-logo-btn">🔓 ورود</button>
-        </div>
-        
-        <!-- بخش مدیریت لوگو - پنهان تا ورود -->
-        <div id="logoManagement" style="display:none;">
-            <div style="background:#e8f5e8; padding:10px; border-radius:5px; margin:10px 0; font-size:11px;">
-                ✅ ورود موفق! خوش آمدید مدیر عزیز
-            </div>
-            
-            <label for="logoFile">📁 انتخاب فایل تصویر:</label>
-            <input type="file" id="logoFile" accept="image/*" onchange="previewImage(this)">
-            
-            <label for="logoUrl">🔗 یا لینک تصویر:</label>
-            <input type="text" id="logoUrl" placeholder="https://example.com/logo.jpg" class="logo-url-input">
-            
-            <img id="logoPreview" class="logo-preview" alt="پیش‌نمایش لوگو">
-            
-            <div>
-                <button onclick="applyLogo()" class="apply-logo-btn">✅ اعمال لوگو</button>
-                <button onclick="removeLogo()" class="remove-logo-btn">🗑️ حذف لوگو</button>
-            </div>
-            
-            <div style="margin-top:10px; padding-top:10px; border-top:1px solid #ddd;">
-                <button onclick="adminLogout()" style="background:#ff9800; color:white; border:none; padding:8px 12px; border-radius:4px; cursor:pointer; font-size:11px; margin-right:5px;">🚪 خروج</button>
-            </div>
-        </div>
-        
-        <button onclick="closeAdminPanel()" class="close-admin-btn">❌ بستن پنل</button>
+        <div>پنل مدیریت لوگو:</div>
+        <input type="file" id="logoFile" accept="image/*">
+        <input type="text" id="logoUrl" placeholder="یا لینک تصویر وارد کنید" class="logo-url-input">
+        <button onclick="applyLogo()" class="apply-logo-btn">اعمال</button>
+        <button onclick="closeAdminPanel()" style="background:#666;margin-left:5px;padding:5px 8px;border:none;color:white;border-radius:4px;font-size:11px;cursor:pointer;">بستن</button>
     </div>
 
     <!-- Header مطابق عکس اول -->
@@ -674,147 +584,6 @@
     </footer>
 
     <script>
-        // کلاس مدیریت ذخیره‌سازی لوگو
-        class LogoManager {
-            constructor() {
-                this.STORAGE_KEY = 'nikaSiteLogo';
-                this.loadSavedLogo();
-            }
-
-            // ذخیره لوگو در حافظه دائم مرورگر
-            saveLogo(imageUrl) {
-                try {
-                    const logoData = {
-                        url: imageUrl,
-                        timestamp: new Date().getTime()
-                    };
-                    const logoDataString = JSON.stringify(logoData);
-                    const variable = this.STORAGE_KEY;
-                    eval(`window.${variable} = logoDataString`);
-                    
-                    // استفاده از cookie به عنوان backup
-                    document.cookie = `${this.STORAGE_KEY}=${encodeURIComponent(imageUrl)}; expires=Fri, 31 Dec 2030 23:59:59 GMT; path=/`;
-                    
-                    this.showMessage('success', 'لوگو با موفقیت ذخیره شد!');
-                    return true;
-                } catch (error) {
-                    console.error('خطا در ذخیره لوگو:', error);
-                    this.showMessage('error', 'خطا در ذخیره لوگو!');
-                    return false;
-                }
-            }
-
-            // بارگذاری لوگو از حافظه
-            loadSavedLogo() {
-                try {
-                    // ابتدا از متغیر window بخوانیم
-                    const variable = this.STORAGE_KEY;
-                    let logoDataString = eval(`typeof window.${variable} !== 'undefined' ? window.${variable} : null`);
-                    
-                    // اگر در window نبود، از cookie بخوانیم
-                    if (!logoDataString) {
-                        logoDataString = this.getCookie(this.STORAGE_KEY);
-                    }
-                    
-                    if (logoDataString) {
-                        let logoUrl;
-                        try {
-                            const logoData = JSON.parse(logoDataString);
-                            logoUrl = logoData.url;
-                        } catch {
-                            logoUrl = logoDataString; // اگر فقط URL باشد
-                        }
-                        
-                        if (logoUrl) {
-                            this.updateLogos(logoUrl);
-                            console.log('لوگو از حافظه بارگذاری شد');
-                        }
-                    }
-                } catch (error) {
-                    console.error('خطا در بارگذاری لوگو:', error);
-                }
-            }
-
-            // حذف لوگو
-            removeLogo() {
-                try {
-                    const variable = this.STORAGE_KEY;
-                    eval(`delete window.${variable}`);
-                    document.cookie = `${this.STORAGE_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
-                    this.resetLogos();
-                    this.showMessage('success', 'لوگو حذف شد!');
-                    return true;
-                } catch (error) {
-                    console.error('خطا در حذف لوگو:', error);
-                    this.showMessage('error', 'خطا در حذف لوگو!');
-                    return false;
-                }
-            }
-
-            // خواندن cookie
-            getCookie(name) {
-                const nameEQ = name + "=";
-                const ca = document.cookie.split(';');
-                for(let i = 0; i < ca.length; i++) {
-                    let c = ca[i];
-                    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-                    if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
-                }
-                return null;
-            }
-
-            // به‌روزرسانی لوگوها در صفحه
-            updateLogos(imageUrl) {
-                const headerLogo = document.getElementById('headerLogo');
-                const mainLogo = document.getElementById('mainLogo');
-                
-                if (headerLogo && imageUrl) {
-                    headerLogo.innerHTML = `<img src="${imageUrl}" alt="لوگو" style="width:100%;height:100%;object-fit:cover;border-radius:4px;">`;
-                }
-                
-                if (mainLogo && imageUrl) {
-                    mainLogo.innerHTML = `<img src="${imageUrl}" alt="لوگو">`;
-                }
-            }
-
-            // بازگرداندن لوگوها به حالت پیش‌فرض
-            resetLogos() {
-                const headerLogo = document.getElementById('headerLogo');
-                const mainLogo = document.getElementById('mainLogo');
-                
-                if (headerLogo) {
-                    headerLogo.innerHTML = `<div class="logo-icon">ن</div>`;
-                }
-                
-                if (mainLogo) {
-                    mainLogo.innerHTML = `<div class="main-logo-placeholder">✈️</div>`;
-                }
-            }
-
-            // نمایش پیام‌های موفقیت یا خطا
-            showMessage(type, message) {
-                const successDiv = document.getElementById('successMessage');
-                const errorDiv = document.getElementById('errorMessage');
-                
-                if (type === 'success' && successDiv) {
-                    successDiv.textContent = message;
-                    successDiv.style.display = 'block';
-                    errorDiv.style.display = 'none';
-                } else if (type === 'error' && errorDiv) {
-                    errorDiv.textContent = message;
-                    errorDiv.style.display = 'block';
-                    successDiv.style.display = 'none';
-                }
-                
-                // پنهان کردن پیام بعد از 3 ثانیه
-                setTimeout(() => {
-                    if (successDiv) successDiv.style.display = 'none';
-                    if (errorDiv) errorDiv.style.display = 'none';
-                }, 3000);
-            }
-        }
-
-        // کلاس تایپ کردن متن
         class AutoTypingText {
             constructor() {
                 this.element = document.getElementById('typingText');
@@ -850,7 +619,6 @@
             }
         }
 
-        // کلاس شمارنده بازدید
         class SimpleCounter {
             constructor() {
                 this.element = document.getElementById('visitorCounter');
@@ -919,74 +687,28 @@
             }
         }
 
-        // متغیر سراسری مدیریت لوگو
-        let logoManager;
+        // بارگذاری لوگو از حافظه مرورگر هنگام شروع
+        function loadSavedLogo() {
+            const savedLogo = sessionStorage.getItem('nikaSiteLogo');
+            if (savedLogo) {
+                updateLogos(savedLogo);
+            }
+        }
 
         // مدیریت پنل ادمین
         function toggleAdminPanel() {
-            const panel = document.getElementById('logoUploadPanel');
-            panel.classList.add('show');
-            
-            // نمایش بخش ورود
-            document.getElementById('loginSection').style.display = 'block';
-            document.getElementById('logoManagement').style.display = 'none';
-        }
-        
-        // ورود ادمین
-        function adminLogin() {
-            const username = document.getElementById('adminUser').value.trim();
-            const password = document.getElementById('adminPass').value.trim();
-            
-            // بررسی اعتبار (می‌توانید تغییر دهید)
-            if (username === 'admin' && password === 'admin123') {
-                document.getElementById('loginSection').style.display = 'none';
-                document.getElementById('logoManagement').style.display = 'block';
-                
-                // پاک کردن فیلدهای ورود
-                document.getElementById('adminUser').value = '';
-                document.getElementById('adminPass').value = '';
-                
-                logoManager.showMessage('success', 'ورود موفق! خوش آمدید مدیر عزیز');
-            } else {
-                logoManager.showMessage('error', 'نام کاربری یا رمز عبور اشتباه است!');
-            }
-        }
-        
-        // خروج ادمین
-        function adminLogout() {
-            if (confirm('آیا مطمئن هستید که می‌خواهید خروج کنید؟')) {
-                document.getElementById('loginSection').style.display = 'block';
-                document.getElementById('logoManagement').style.display = 'none';
-                
-                // پاک کردن فیلدها
-                document.getElementById('adminUser').value = '';
-                document.getElementById('adminPass').value = '';
-                document.getElementById('logoFile').value = '';
-                document.getElementById('logoUrl').value = '';
-                document.getElementById('logoPreview').style.display = 'none';
-                
-                logoManager.showMessage('success', 'خروج موفق!');
+            const password = prompt('کلمه عبور ادمین را وارد کنید:');
+            if (password === 'admin123') { // می‌توانید کلمه عبور را تغییر دهید
+                const panel = document.getElementById('logoUploadPanel');
+                panel.classList.add('show');
+            } else if (password !== null) {
+                alert('کلمه عبور اشتباه است!');
             }
         }
         
         function closeAdminPanel() {
             const panel = document.getElementById('logoUploadPanel');
             panel.classList.remove('show');
-            
-            // بازنشانی به حالت اولیه
-            document.getElementById('loginSection').style.display = 'block';
-            document.getElementById('logoManagement').style.display = 'none';
-            
-            // پاک کردن همه فیلدها
-            document.getElementById('adminUser').value = '';
-            document.getElementById('adminPass').value = '';
-            const fileInput = document.getElementById('logoFile');
-            const urlInput = document.getElementById('logoUrl');
-            const preview = document.getElementById('logoPreview');
-            
-            if (fileInput) fileInput.value = '';
-            if (urlInput) urlInput.value = '';
-            if (preview) preview.style.display = 'none';
         }
 
         // بررسی لینک ادمین در URL
@@ -994,152 +716,64 @@
             const urlParams = new URLSearchParams(window.location.search);
             const adminKey = urlParams.get('admin');
             
-            if (adminKey === 'nika2024') {
+            // اگر پارامتر admin در URL وجود داشته باشد
+            if (adminKey === 'nika2024') { // کلید مخصوص ادمین
                 const panel = document.getElementById('logoUploadPanel');
                 panel.classList.add('show');
-                
-                // ورود مستقیم بدون نیاز به رمز
-                document.getElementById('loginSection').style.display = 'none';
-                document.getElementById('logoManagement').style.display = 'block';
                 
                 // حذف پارامتر از URL برای امنیت
                 window.history.replaceState({}, document.title, window.location.pathname);
                 
+                // نمایش پیام خوشامدگویی
                 setTimeout(() => {
-                    logoManager.showMessage('success', 'خوش آمدید! شما وارد پنل مدیریت شدید.');
+                    alert('خوش آمدید! شما وارد پنل مدیریت شدید.');
                 }, 500);
             }
         }
 
-        // پیش‌نمایش تصویر قبل از آپلود
-        function previewImage(input) {
-            const preview = document.getElementById('logoPreview');
-            const urlInput = document.getElementById('logoUrl');
-            
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                    urlInput.value = ''; // پاک کردن فیلد URL
-                };
-                reader.readAsDataURL(input.files[0]);
-            } else {
-                preview.style.display = 'none';
-            }
-        }
-
-        // اعمال لوگو جدید
+        // تابع اعمال لوگو
         function applyLogo() {
             const fileInput = document.getElementById('logoFile');
             const urlInput = document.getElementById('logoUrl');
+            const headerLogo = document.getElementById('headerLogo');
+            const mainLogo = document.getElementById('mainLogo');
+            
+            let imageUrl = '';
             
             if (fileInput.files && fileInput.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    const imageUrl = e.target.result;
-                    logoManager.updateLogos(imageUrl);
-                    logoManager.saveLogo(imageUrl);
-                    
-                    // پاک کردن فیلد فایل
-                    fileInput.value = '';
-                    document.getElementById('logoPreview').style.display = 'none';
+                    updateLogos(e.target.result);
                 };
                 reader.readAsDataURL(fileInput.files[0]);
                 return;
             }
             
             if (urlInput.value.trim()) {
-                const imageUrl = urlInput.value.trim();
-                
-                // بررسی معتبر بودن URL
-                const img = new Image();
-                img.onload = function() {
-                    logoManager.updateLogos(imageUrl);
-                    logoManager.saveLogo(imageUrl);
-                    urlInput.value = '';
-                };
-                img.onerror = function() {
-                    logoManager.showMessage('error', 'لینک تصویر معتبر نیست!');
-                };
-                img.src = imageUrl;
+                updateLogos(urlInput.value.trim());
                 return;
             }
             
-            logoManager.showMessage('error', 'لطفاً یک فایل انتخاب کنید یا لینک تصویر وارد کنید');
+            alert('لطفاً یک فایل انتخاب کنید یا لینک تصویر وارد کنید');
         }
         
-        // حذف لوگو
-        function removeLogo() {
-            if (confirm('آیا مطمئن هستید که می‌خواهید لوگو را حذف کنید؟')) {
-                logoManager.removeLogo();
-                
-                // پاک کردن فیلدها
-                const fileInput = document.getElementById('logoFile');
-                const urlInput = document.getElementById('logoUrl');
-                const preview = document.getElementById('logoPreview');
-                
-                if (fileInput) fileInput.value = '';
-                if (urlInput) urlInput.value = '';
-                if (preview) preview.style.display = 'none';
-            }
+        function updateLogos(imageUrl) {
+            const headerLogo = document.getElementById('headerLogo');
+            const mainLogo = document.getElementById('mainLogo');
+            
+            // به‌روزرسانی لوگو هدر
+            headerLogo.innerHTML = `<img src="${imageUrl}" alt="لوگو" style="width:100%;height:100%;object-fit:cover;border-radius:4px;">`;
+            
+            // به‌روزرسانی لوگو اصلی
+            mainLogo.innerHTML = `<img src="${imageUrl}" alt="لوگو">`;
         }
 
-        // شروع اسکریپت‌ها هنگام بارگذاری صفحه
+        // شروع اسکریپت‌ها
         document.addEventListener('DOMContentLoaded', () => {
-            // ایجاد مدیر لوگو
-            logoManager = new LogoManager();
-            
-            // شروع انیمیشن‌ها
             new AutoTypingText();
             new SimpleCounter();
-            
-            // بررسی دسترسی ادمین
-            checkAdminAccess();
-            
-            // اضافه کردن event listener برای فیلدهای ورود
-            const adminUser = document.getElementById('adminUser');
-            const adminPass = document.getElementById('adminPass');
-            
-            if (adminUser && adminPass) {
-                // امکان ورود با فشردن Enter
-                adminPass.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        adminLogin();
-                    }
-                });
-                
-                adminUser.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        document.getElementById('adminPass').focus();
-                    }
-                });
-            }
-            const urlInput = document.getElementById('logoUrl');
-            if (urlInput) {
-                urlInput.addEventListener('input', function() {
-                    const preview = document.getElementById('logoPreview');
-                    if (this.value.trim()) {
-                        // پاک کردن فیلد فایل
-                        document.getElementById('logoFile').value = '';
-                        preview.style.display = 'none';
-                    }
-                });
-            }
-            
-            console.log('🚀 وب‌سایت نیکا پرواز پارس بارگذاری شد');
-            console.log('💾 سیستم ذخیره‌سازی لوگو فعال است');
+            checkAdminAccess(); // بررسی دسترسی ادمین از طریق لینک
         });
-
-        // ذخیره وضعیت صفحه قبل از خروج
-        window.addEventListener('beforeunload', function() {
-            console.log('📝 ذخیره وضعیت...');
-        });
-
-        // مدیریت خطاهای تصاویر
-        document.addEventListener('error', function(e) {
-            if (e.target.tagName === 'IMG') {
-                console.warn('خطا در بارگذاری تصویر:', e.target.src);
-                logoManager.showMessage('error', 'خطا در بارگذاری تصویر');
-            }
-        }, true);
+    </script>
+</body>
+</html>
