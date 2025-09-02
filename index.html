@@ -693,6 +693,9 @@
 
         // شبیه‌سازی localStorage با متغیر جاوااسکریپت
         let savedLogo = null;
+        
+        // لوگوی ثابت شما از GitHub
+        const DEFAULT_LOGO = 'https://raw.githubusercontent.com/elya90090/sit-nikaparvazpars/main/nika.png';
 
         // تابع بارگذاری لوگوی ذخیره شده
         function loadSavedLogo() {
@@ -842,6 +845,9 @@
             const existingLogo = loadLogo();
             if (existingLogo) {
                 updateLogosQuietly(existingLogo);
+            } else {
+                // اگر هیچ لوگویی ذخیره نشده، لوگوی پیش‌فرض را نمایش بده
+                updateLogosQuietly(DEFAULT_LOGO);
             }
         }
 
@@ -852,3 +858,6 @@
             checkAdminAccess(); // بررسی دسترسی ادمین از طریق لینک
             initializePage(); // بارگذاری لوگوی ذخیره شده بدون پیام
         });
+    </script>
+</body>
+</html>
