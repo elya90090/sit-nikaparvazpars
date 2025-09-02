@@ -691,76 +691,45 @@
             }
         }
 
-        // لوگوی ثابت شما - مستقیماً در کد
-        const YOUR_LOGO = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9InB1cnBsZUdyYWRpZW50IiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzlDMjdCMDtzdG9wLW9wYWNpdHk6MSIgLz4KPHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM2NzNBQjc7c3RvcC1vcGFjaXR5OjEiIC8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQ1Mjc4QjtzdG9wLW9wYWNpdHk6MSIgLz4KPC9saW5lYXJHcmFkaWVudD4KPGxpbmVhckdyYWRpZW50IGlkPSJwaW5rR3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgo8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojRTkxRTYzO3N0b3Atb3BhY2l0eToxIiAvPgo8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNBRDFBNTc7c3RvcC1vcGFjaXR5OjEiIC8+CjwvbGluZWFyR3JhZGllbnQ+CjwvZGVmcz4KPCEtLSBUaWNrIG1hcmsgc2hhcGUgLS0+CjxwYXRoIGQ9Ik0yMCA1MEM0MCA3MCA2MCA0MCA4MCAyMEM2MCA0MCA0MCA4MCAyMCA2MFoiIGZpbGw9InVybCgjcHVycGxlR3JhZGllbnQpIiBzdHJva2Utd2lkdGg9IjIiLz4KPHA+YXRoIGQ9Ik0xNSA0NUwzNSA2NUw3NSAyNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ1cmwoI3BpbmtHcmFkaWVudCkiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPgo=';
+        // شبیه‌سازی localStorage با متغیر جاوااسکریپت
+        let savedLogo = null;
 
-        // بارگذاری خودکار لوگوی ثابت
+        // تابع بارگذاری لوگوی ذخیره شده
         function loadSavedLogo() {
-            if (YOUR_LOGO) {
-                updateLogos(YOUR_LOGO);
-                console.log('لوگوی ثابت بارگذاری شد');
+            // اگر لوگو در جلسه فعلی ذخیره شده، بارگذاری کن
+            if (savedLogo) {
+                updateLogosQuietly(savedLogo);
             }
         }
 
-        // شبیه‌سازی localStorage با cookie (برای ذخیره دائمی)
+        // تابع ذخیره لوگو
         function saveLogo(imageUrl) {
+            savedLogo = imageUrl;
+            // در اینجا می‌توانید به سرور ارسال کنید یا در localStorage ذخیره کنید
             try {
-                // تلاش برای استفاده از localStorage (اگر در دسترس باشد)
-                if (typeof(Storage) !== "undefined" && localStorage) {
-                    localStorage.setItem('nikaTravelLogo', imageUrl);
-                } else {
-                    // استفاده از cookie به عنوان جایگزین
-                    const expiryDate = new Date();
-                    expiryDate.setFullYear(expiryDate.getFullYear() + 5); // ۵ سال
-                    document.cookie = `nikaTravelLogo=${encodeURIComponent(imageUrl)}; expires=${expiryDate.toUTCString()}; path=/`;
-                }
-                return true;
+                localStorage.setItem('nikaTravelLogo', imageUrl);
             } catch(e) {
-                // اگر هیچکدام کار نکرد، از sessionStorage استفاده کن
-                sessionStorage.setItem('nikaTravelLogo', imageUrl);
-                return false;
+                // اگر localStorage دردسترس نیست، فقط در متغیر ذخیره کن
             }
+            return true;
         }
 
+        // تابع بارگذاری لوگو از localStorage
         function loadLogo() {
             try {
-                // ابتدا از localStorage بخوان
-                if (typeof(Storage) !== "undefined" && localStorage) {
-                    return localStorage.getItem('nikaTravelLogo');
-                } else {
-                    // خواندن از cookie
-                    const name = "nikaTravelLogo=";
-                    const decodedCookie = decodeURIComponent(document.cookie);
-                    const cookies = decodedCookie.split(';');
-                    for(let i = 0; i < cookies.length; i++) {
-                        let cookie = cookies[i];
-                        while (cookie.charAt(0) == ' ') {
-                            cookie = cookie.substring(1);
-                        }
-                        if (cookie.indexOf(name) == 0) {
-                            return cookie.substring(name.length, cookie.length);
-                        }
-                    }
-                }
+                return localStorage.getItem('nikaTravelLogo') || savedLogo;
             } catch(e) {
-                // اگر مشکلی پیش آمد، از sessionStorage بخوان
-                return sessionStorage.getItem('nikaTravelLogo');
+                return savedLogo;
             }
-            return null;
         }
 
+        // تابع حذف لوگو
         function deleteLogo() {
+            savedLogo = null;
             try {
-                // حذف از localStorage
-                if (typeof(Storage) !== "undefined" && localStorage) {
-                    localStorage.removeItem('nikaTravelLogo');
-                }
-                // حذف از cookie
-                document.cookie = `nikaTravelLogo=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-                // حذف از sessionStorage
-                sessionStorage.removeItem('nikaTravelLogo');
+                localStorage.removeItem('nikaTravelLogo');
             } catch(e) {
-                console.log('خطا در حذف لوگو:', e);
+                // localStorage در دسترس نیست
             }
         }
 
@@ -797,7 +766,7 @@
             }
         }
 
-        // تابع اعمال لوگو
+        // تابع اعمال لوگو با پیام
         function applyLogo() {
             const fileInput = document.getElementById('logoFile');
             const urlInput = document.getElementById('logoUrl');
@@ -819,7 +788,22 @@
             alert('لطفاً یک فایل انتخاب کنید یا لینک تصویر وارد کنید');
         }
         
+        // تابع به‌روزرسانی لوگوها با پیام موفقیت
         function updateLogos(imageUrl) {
+            updateLogosQuietly(imageUrl);
+            
+            // ذخیره در حافظه
+            const isPermanent = saveLogo(imageUrl);
+            
+            if (isPermanent) {
+                alert('لوگو با موفقیت اعمال و برای همیشه ذخیره شد! 🎉');
+            } else {
+                alert('لوگو اعمال شد! (تا بستن مرورگر باقی می‌ماند)');
+            }
+        }
+
+        // تابع به‌روزرسانی لوگوها بدون پیام (برای بارگذاری خودکار)
+        function updateLogosQuietly(imageUrl) {
             const headerLogo = document.getElementById('headerLogo');
             const mainLogo = document.getElementById('mainLogo');
             
@@ -828,15 +812,6 @@
             
             // به‌روزرسانی لوگو اصلی
             mainLogo.innerHTML = `<img src="${imageUrl}" alt="لوگو">`;
-            
-            // ذخیره دائمی در حافظه مرورگر
-            const isPermanent = saveLogo(imageUrl);
-            
-            if (isPermanent) {
-                alert('لوگو با موفقیت اعمال و برای همیشه ذخیره شد! 🎉');
-            } else {
-                alert('لوگو اعمال شد! (تا بستن مرورگر باقی می‌ماند)');
-            }
         }
 
         // تابع حذف لوگو (اختیاری)
@@ -862,13 +837,18 @@
             }
         }
 
+        // بارگذاری لوگوی ذخیره شده در شروع صفحه
+        function initializePage() {
+            const existingLogo = loadLogo();
+            if (existingLogo) {
+                updateLogosQuietly(existingLogo);
+            }
+        }
+
         // شروع اسکریپت‌ها
         document.addEventListener('DOMContentLoaded', () => {
             new AutoTypingText();
             new SimpleCounter();
             checkAdminAccess(); // بررسی دسترسی ادمین از طریق لینک
-            loadSavedLogo(); // بارگذاری لوگوی ثابت
+            initializePage(); // بارگذاری لوگوی ذخیره شده بدون پیام
         });
-    </script>
-</body>
-</html>
